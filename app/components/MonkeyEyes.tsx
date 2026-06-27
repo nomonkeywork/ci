@@ -1,33 +1,22 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-interface EyePosition {
-  x: number;
-  y: number;
-}
-
-interface PupilPosition {
-  left: EyePosition;
-  right: EyePosition;
-}
+interface EyePosition { x: number; y: number; }
+interface PupilPosition { left: EyePosition; right: EyePosition; }
 
 const MonkeyEyes: React.FC = () => {
   const leftEyeRef = useRef<HTMLDivElement>(null);
   const rightEyeRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
 
-  const [mouseX, setMouseX] = useState(0);
-  const [mouseY, setMouseY] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
-
   const [smoothPupilPos, setSmoothPupilPos] = useState<PupilPosition>({
     left: { x: 0, y: 0 },
     right: { x: 0, y: 0 },
   });
-
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,48 +28,18 @@ const MonkeyEyes: React.FC = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMouseX(e.clientX);
-      setMouseY(e.clientY);
+      mousePos.current = { x: e.clientX, y: e.clientY };
+      if (!reducedMotion) {
+        const maxTilt = 12;
+        setTilt({
+          rotateY: (e.clientX / window.innerWidth - 0.5) * 2 * maxTilt,
+          rotateX: (e.clientY / window.innerHeight - 0.5) * -2 * maxTilt,
+        });
+      }
     };
-    const handleWindowResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('resize', handleWindowResize);
-    handleWindowResize();
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-
-  const calculatePupilPosition = useCallback(
-    (eyeElement: HTMLDivElement | null): EyePosition => {
-      if (!eyeElement || typeof window === 'undefined') return { x: 0, y: 0 };
-
-      const rect = eyeElement.getBoundingClientRect();
-      const eyeCenterX = rect.left + rect.width / 2;
-      const eyeCenterY = rect.top + rect.height / 2;
-
-      const deltaX = mouseX - eyeCenterX;
-      const deltaY = mouseY - eyeCenterY;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-      if (distance < 5) return { x: 0, y: 0 };
-
-      const maxRadius = 10;
-      const angle = Math.atan2(deltaY, deltaX);
-      const clampDistance = Math.min(distance, maxRadius);
-
-      return {
-        x: Math.cos(angle) * clampDistance,
-        y: Math.sin(angle) * clampDistance,
-      };
-    },
-    [mouseX, mouseY]
-  );
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -88,46 +47,41 @@ const MonkeyEyes: React.FC = () => {
     let animationFrameId: number;
     const smoothFactor = 0.15;
 
-    const animatePupils = () => {
-      const leftPos = calculatePupilPosition(leftEyeRef.current);
-      const rightPos = calculatePupilPosition(rightEyeRef.current);
+    const getEyePosition = (eyeEl: HTMLDivElement | null): EyePosition => {
+      if (!eyeEl) return { x: 0, y: 0 };
+      const { x: mx, y: my } = mousePos.current;
+      const rect = eyeEl.getBoundingClientRect();
+      const dx = mx - (rect.left + rect.width / 2);
+      const dy = my - (rect.top + rect.height / 2);
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 5) return { x: 0, y: 0 };
+      const angle = Math.atan2(dy, dx);
+      const clamped = Math.min(dist, 10);
+      return { x: Math.cos(angle) * clamped, y: Math.sin(angle) * clamped };
+    };
 
-      setSmoothPupilPos((prev) => ({
+    const animate = () => {
+      const lp = getEyePosition(leftEyeRef.current);
+      const rp = getEyePosition(rightEyeRef.current);
+      setSmoothPupilPos(prev => ({
         left: {
-          x: prev.left.x + (leftPos.x - prev.left.x) * smoothFactor,
-          y: prev.left.y + (leftPos.y - prev.left.y) * smoothFactor,
+          x: prev.left.x + (lp.x - prev.left.x) * smoothFactor,
+          y: prev.left.y + (lp.y - prev.left.y) * smoothFactor,
         },
         right: {
-          x: prev.right.x + (rightPos.x - prev.right.x) * smoothFactor,
-          y: prev.right.y + (rightPos.y - prev.right.y) * smoothFactor,
+          x: prev.right.x + (rp.x - prev.right.x) * smoothFactor,
+          y: prev.right.y + (rp.y - prev.right.y) * smoothFactor,
         },
       }));
-
-      animationFrameId = requestAnimationFrame(animatePupils);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    animatePupils();
+    animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [mouseX, mouseY, calculatePupilPosition, reducedMotion]);
-
-  const calculateTilt = useCallback(() => {
-    if (reducedMotion || typeof window === 'undefined' || windowSize.width === 0) {
-      return { rotateX: 0, rotateY: 0 };
-    }
-    const relX = mouseX / windowSize.width;
-    const relY = mouseY / windowSize.height;
-    const maxTilt = 12;
-    return {
-      rotateY: (relX - 0.5) * 2 * maxTilt,
-      rotateX: (relY - 0.5) * -2 * maxTilt,
-    };
-  }, [mouseX, mouseY, windowSize, reducedMotion]);
-
-  const tilt = calculateTilt();
+  }, [reducedMotion]);
 
   return (
     <div
-      ref={containerRef}
       className="relative mx-auto cursor-pointer select-none"
       style={{
         width: 'min(520px, 92vw)',
@@ -145,61 +99,43 @@ const MonkeyEyes: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <Image
             src="/monkey-head.svg"
-            alt="nomonkeywork mascot — a grinning chimp"
+            alt="nomonkeywork mascot, a grinning chimp"
             fill
             className="object-contain drop-shadow-2xl"
             priority
           />
         </div>
 
-        {/* Left eye */}
         <div
           ref={leftEyeRef}
           className="absolute z-10 flex items-center justify-center overflow-hidden"
           style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
+            width: '40px', height: '40px', borderRadius: '50%',
             backgroundColor: '#0f0f0f',
-            top: 'calc(42.5% - 20px)',
-            left: 'calc(39% - 20px)',
+            top: 'calc(42.5% - 20px)', left: 'calc(39% - 20px)',
           }}
         >
-          <div
-            style={{
-              width: '14px',
-              height: '14px',
-              borderRadius: '50%',
-              backgroundColor: 'white',
-              flexShrink: 0,
-              transform: `translate(${smoothPupilPos.left.x}px, ${smoothPupilPos.left.y}px)`,
-            }}
-          />
+          <div style={{
+            width: '14px', height: '14px', borderRadius: '50%',
+            backgroundColor: 'white', flexShrink: 0,
+            transform: `translate(${smoothPupilPos.left.x}px, ${smoothPupilPos.left.y}px)`,
+          }} />
         </div>
 
-        {/* Right eye */}
         <div
           ref={rightEyeRef}
           className="absolute z-10 flex items-center justify-center overflow-hidden"
           style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
+            width: '40px', height: '40px', borderRadius: '50%',
             backgroundColor: '#0f0f0f',
-            top: 'calc(42.5% - 20px)',
-            left: 'calc(61.5% - 20px)',
+            top: 'calc(42.5% - 20px)', left: 'calc(61.5% - 20px)',
           }}
         >
-          <div
-            style={{
-              width: '14px',
-              height: '14px',
-              borderRadius: '50%',
-              backgroundColor: 'white',
-              flexShrink: 0,
-              transform: `translate(${smoothPupilPos.right.x}px, ${smoothPupilPos.right.y}px)`,
-            }}
-          />
+          <div style={{
+            width: '14px', height: '14px', borderRadius: '50%',
+            backgroundColor: 'white', flexShrink: 0,
+            transform: `translate(${smoothPupilPos.right.x}px, ${smoothPupilPos.right.y}px)`,
+          }} />
         </div>
       </div>
     </div>

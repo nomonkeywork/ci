@@ -100,7 +100,7 @@ export default function EmailCapture() {
 
       <button
         type="submit"
-        className="px-6 py-3 rounded-lg text-base whitespace-nowrap [transition:transform_150ms_cubic-bezier(0.16,1,0.3,1),box-shadow_150ms_ease] hover:scale-[1.03] hover:shadow-[0_4px_16px_oklch(62%_0.14_58_/_0.35)] active:scale-[0.97]"
+        className="px-6 py-3 rounded-lg text-base whitespace-nowrap [transition:transform_150ms_cubic-bezier(0.16,1,0.3,1),box-shadow_150ms_ease] hover:scale-[1.03] hover:shadow-[0_4px_16px_oklch(62%_0.14_58_/_0.35)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-[oklch(52%_0.16_48)] focus:ring-offset-2"
         style={{
           fontFamily: 'var(--font-sg-regular)',
           backgroundColor: 'oklch(72% 0.10 62)',
