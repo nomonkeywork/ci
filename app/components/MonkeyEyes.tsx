@@ -12,6 +12,7 @@ const MonkeyEyes: React.FC = () => {
   const mousePos = useRef({ x: 0, y: 0 });
 
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [touchDevice, setTouchDevice] = useState(false);
   const [smoothPupilPos, setSmoothPupilPos] = useState<PupilPosition>({
     left: { x: 0, y: 0 },
     right: { x: 0, y: 0 },
@@ -27,6 +28,11 @@ const MonkeyEyes: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setTouchDevice(window.matchMedia('(hover: none)').matches);
+  }, []);
+
+  useEffect(() => {
+    if (touchDevice) return;
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
       if (!reducedMotion) {
@@ -39,10 +45,10 @@ const MonkeyEyes: React.FC = () => {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [reducedMotion]);
+  }, [reducedMotion, touchDevice]);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || touchDevice) return;
 
     let animationFrameId: number;
     const smoothFactor = 0.15;
@@ -84,8 +90,8 @@ const MonkeyEyes: React.FC = () => {
     <div
       className="relative mx-auto cursor-pointer select-none"
       style={{
-        width: 'min(520px, 92vw)',
-        height: 'min(520px, 92vw)',
+        width: 'min(520px, 65vw)',
+        height: 'min(520px, 65vw)',
         perspective: '1000px',
       }}
     >
@@ -94,6 +100,7 @@ const MonkeyEyes: React.FC = () => {
         style={{
           transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale(1.02)`,
           transition: reducedMotion ? 'none' : 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
+          filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.18))',
         }}
       >
         <div className="absolute inset-0 z-0">
@@ -101,40 +108,42 @@ const MonkeyEyes: React.FC = () => {
             src="/monkey-head.svg"
             alt="nomonkeywork mascot, a grinning chimp"
             fill
-            className="object-contain drop-shadow-2xl"
+            className="object-contain"
             priority
           />
         </div>
 
         <div
           ref={leftEyeRef}
-          className="absolute z-10 flex items-center justify-center overflow-hidden"
+          className="absolute z-10 overflow-hidden"
           style={{
-            width: '40px', height: '40px', borderRadius: '50%',
+            width: '7.7%', aspectRatio: '1', borderRadius: '50%',
             backgroundColor: '#0f0f0f',
-            top: 'calc(42.5% - 20px)', left: 'calc(39% - 20px)',
+            top: 'calc(42.5% - 3.85%)', left: 'calc(39% - 3.85%)',
           }}
         >
           <div style={{
-            width: '14px', height: '14px', borderRadius: '50%',
-            backgroundColor: 'white', flexShrink: 0,
-            transform: `translate(${smoothPupilPos.left.x}px, ${smoothPupilPos.left.y}px)`,
+            position: 'absolute', width: '35%', aspectRatio: '1',
+            borderRadius: '50%', backgroundColor: 'white',
+            top: '50%', left: '50%',
+            transform: `translate(calc(-50% + ${smoothPupilPos.left.x}px), calc(-50% + ${smoothPupilPos.left.y}px))`,
           }} />
         </div>
 
         <div
           ref={rightEyeRef}
-          className="absolute z-10 flex items-center justify-center overflow-hidden"
+          className="absolute z-10 overflow-hidden"
           style={{
-            width: '40px', height: '40px', borderRadius: '50%',
+            width: '7.7%', aspectRatio: '1', borderRadius: '50%',
             backgroundColor: '#0f0f0f',
-            top: 'calc(42.5% - 20px)', left: 'calc(61.5% - 20px)',
+            top: 'calc(42.5% - 3.85%)', left: 'calc(61.5% - 3.85%)',
           }}
         >
           <div style={{
-            width: '14px', height: '14px', borderRadius: '50%',
-            backgroundColor: 'white', flexShrink: 0,
-            transform: `translate(${smoothPupilPos.right.x}px, ${smoothPupilPos.right.y}px)`,
+            position: 'absolute', width: '35%', aspectRatio: '1',
+            borderRadius: '50%', backgroundColor: 'white',
+            top: '50%', left: '50%',
+            transform: `translate(calc(-50% + ${smoothPupilPos.right.x}px), calc(-50% + ${smoothPupilPos.right.y}px))`,
           }} />
         </div>
       </div>
