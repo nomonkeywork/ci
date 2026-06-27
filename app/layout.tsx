@@ -15,6 +15,7 @@ const spaceGroteskRegular = localFont({
 export const metadata: Metadata = {
   title: 'nomonkeywork — We do the monkey work.',
   description: 'An agency that handles the repetitive work so your team can focus on what matters.',
+  manifest: '/manifest.json',
   openGraph: {
     title: 'nomonkeywork',
     description: 'We do the monkey work. You do the real work.',
