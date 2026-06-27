@@ -20,6 +20,7 @@ const MonkeyEyes: React.FC = () => {
 
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   const [smoothPupilPos, setSmoothPupilPos] = useState<PupilPosition>({
     left: { x: 0, y: 0 },
@@ -29,11 +30,18 @@ const MonkeyEyes: React.FC = () => {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMouseX(e.clientX);
       setMouseY(e.clientY);
     };
-
     const handleWindowResize = () => {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     };
@@ -75,6 +83,8 @@ const MonkeyEyes: React.FC = () => {
   );
 
   useEffect(() => {
+    if (reducedMotion) return;
+
     let animationFrameId: number;
     const smoothFactor = 0.15;
 
@@ -98,10 +108,10 @@ const MonkeyEyes: React.FC = () => {
 
     animatePupils();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [mouseX, mouseY, calculatePupilPosition]);
+  }, [mouseX, mouseY, calculatePupilPosition, reducedMotion]);
 
   const calculateTilt = useCallback(() => {
-    if (typeof window === 'undefined' || windowSize.width === 0) {
+    if (reducedMotion || typeof window === 'undefined' || windowSize.width === 0) {
       return { rotateX: 0, rotateY: 0 };
     }
     const relX = mouseX / windowSize.width;
@@ -111,35 +121,38 @@ const MonkeyEyes: React.FC = () => {
       rotateY: (relX - 0.5) * 2 * maxTilt,
       rotateX: (relY - 0.5) * -2 * maxTilt,
     };
-  }, [mouseX, mouseY, windowSize]);
+  }, [mouseX, mouseY, windowSize, reducedMotion]);
 
   const tilt = calculateTilt();
 
   return (
     <div
       ref={containerRef}
-      className="relative w-[400px] h-[400px] mx-auto cursor-pointer select-none"
-      style={{ perspective: '1000px' }}
+      className="relative mx-auto cursor-pointer select-none"
+      style={{
+        width: 'min(520px, 92vw)',
+        height: 'min(520px, 92vw)',
+        perspective: '1000px',
+      }}
     >
       <div
-        className="relative w-full h-full transition-transform duration-200 ease-out"
+        className="relative w-full h-full"
         style={{
           transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale(1.02)`,
+          transition: reducedMotion ? 'none' : 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
-        {/* Monkey face */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/monkey-head.svg"
-            alt="Monkey Head"
+            alt="nomonkeywork mascot — a grinning chimp"
             fill
             className="object-contain drop-shadow-2xl"
             priority
           />
         </div>
 
-        {/* Left eye — 40px fixed circle, centered via margin offset */}
-        {/* Position derived from SVG viewBox 2487×2278 + object-contain 17px top offset */}
+        {/* Left eye */}
         <div
           ref={leftEyeRef}
           className="absolute z-10 flex items-center justify-center overflow-hidden"

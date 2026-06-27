@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-27T00:00:00Z",
+  "title": "Design System: nomonkeywork",
+  "extensions": {
+    "colorMeta": {
+      "studio-canvas": {
+        "role": "neutral",
+        "displayName": "Studio Canvas",
+        "canonical": "oklch(93% 0.022 66)",
+        "tonalRamp": [
+          "oklch(20% 0.018 66)",
+          "oklch(32% 0.020 66)",
+          "oklch(45% 0.022 66)",
+          "oklch(58% 0.022 66)",
+          "oklch(70% 0.022 66)",
+          "oklch(80% 0.020 66)",
+          "oklch(88% 0.020 66)",
+          "oklch(93% 0.022 66)"
+        ]
+      },
+      "studio-canvas-high": {
+        "role": "neutral",
+        "displayName": "Studio Canvas High",
+        "canonical": "oklch(97% 0.012 66)",
+        "tonalRamp": [
+          "oklch(25% 0.008 66)",
+          "oklch(38% 0.010 66)",
+          "oklch(50% 0.010 66)",
+          "oklch(62% 0.010 66)",
+          "oklch(74% 0.010 66)",
+          "oklch(84% 0.010 66)",
+          "oklch(91% 0.010 66)",
+          "oklch(97% 0.012 66)"
+        ]
+      },
+      "studio-canvas-low": {
+        "role": "neutral",
+        "displayName": "Studio Canvas Low",
+        "canonical": "oklch(91% 0.022 66)",
+        "tonalRamp": [
+          "oklch(18% 0.018 66)",
+          "oklch(30% 0.020 66)",
+          "oklch(43% 0.022 66)",
+          "oklch(56% 0.022 66)",
+          "oklch(68% 0.022 66)",
+          "oklch(78% 0.020 66)",
+          "oklch(86% 0.020 66)",
+          "oklch(91% 0.022 66)"
+        ]
+      },
+      "near-black-slate": {
+        "role": "neutral",
+        "displayName": "Near-Black Slate",
+        "canonical": "oklch(18% 0.008 75)",
+        "tonalRamp": [
+          "oklch(18% 0.008 75)",
+          "oklch(28% 0.008 75)",
+          "oklch(40% 0.009 75)",
+          "oklch(52% 0.010 75)",
+          "oklch(64% 0.008 75)",
+          "oklch(75% 0.007 75)",
+          "oklch(85% 0.006 75)",
+          "oklch(95% 0.004 75)"
+        ]
+      },
+      "warm-brown": {
+        "role": "neutral",
+        "displayName": "Warm Brown",
+        "canonical": "oklch(32% 0.012 70)",
+        "tonalRamp": [
+          "oklch(18% 0.010 70)",
+          "oklch(32% 0.012 70)",
+          "oklch(44% 0.012 70)",
+          "oklch(56% 0.012 70)",
+          "oklch(66% 0.011 70)",
+          "oklch(76% 0.010 70)",
+          "oklch(86% 0.008 70)",
+          "oklch(95% 0.005 70)"
+        ]
+      },
+      "sienna-ochre": {
+        "role": "primary",
+        "displayName": "Sienna Ochre",
+        "canonical": "oklch(72% 0.10 62)",
+        "tonalRamp": [
+          "oklch(20% 0.10 62)",
+          "oklch(30% 0.10 62)",
+          "oklch(42% 0.10 62)",
+          "oklch(52% 0.10 62)",
+          "oklch(62% 0.10 62)",
+          "oklch(72% 0.10 62)",
+          "oklch(82% 0.08 62)",
+          "oklch(92% 0.04 62)"
+        ]
+      },
+      "burnt-ochre": {
+        "role": "primary",
+        "displayName": "Burnt Ochre",
+        "canonical": "oklch(52% 0.16 48)",
+        "tonalRamp": [
+          "oklch(15% 0.12 48)",
+          "oklch(25% 0.14 48)",
+          "oklch(35% 0.15 48)",
+          "oklch(45% 0.16 48)",
+          "oklch(52% 0.16 48)",
+          "oklch(62% 0.14 48)",
+          "oklch(74% 0.10 48)",
+          "oklch(86% 0.06 48)"
+        ]
+      },
+      "error-red": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "oklch(50% 0.15 25)",
+        "tonalRamp": [
+          "oklch(20% 0.12 25)",
+          "oklch(30% 0.13 25)",
+          "oklch(40% 0.14 25)",
+          "oklch(50% 0.15 25)",
+          "oklch(60% 0.13 25)",
+          "oklch(70% 0.10 25)",
+          "oklch(82% 0.06 25)",
+          "oklch(93% 0.03 25)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero title only. One element per page. `clamp` ensures the dramatic scale ratio holds at every viewport."
+      },
+      "body": {
+        "displayName": "Body / Tagline",
+        "purpose": "Primary supporting copy. The clamp scales with the viewport to maintain a 4-6x ratio with Display."
+      },
+      "label": {
+        "displayName": "Label / UI",
+        "purpose": "Button text, input placeholder, form labels. Fixed size; does not respond to viewport."
+      },
+      "small": {
+        "displayName": "Small / Error",
+        "purpose": "Error messages, helper text, fine print. Used sparingly."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ochre-hover-glow",
+        "value": "0 4px 16px oklch(62% 0.14 58 / 0.35)",
+        "purpose": "Primary button hover only. Tinted to match button color — glows, not drops. The only shadow in the system."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for all transitions and entrances. Confident deceleration."
+      },
+      {
+        "name": "duration-feedback",
+        "value": "150ms",
+        "purpose": "Instant feedback: button hover scale, press."
+      },
+      {
+        "name": "duration-state",
+        "value": "200ms",
+        "purpose": "State changes: border-color transitions, focus ring appearance."
+      },
+      {
+        "name": "duration-transition",
+        "value": "260ms",
+        "purpose": "Form exit animation (opacity + lift)."
+      },
+      {
+        "name": "duration-entrance",
+        "value": "700ms",
+        "purpose": "Page load entrance animations (fade-up, fade-in)."
+      },
+      {
+        "name": "delay-mascot",
+        "value": "100ms",
+        "purpose": "Stagger: mascot enters after title."
+      },
+      {
+        "name": "delay-tagline",
+        "value": "200ms",
+        "purpose": "Stagger: tagline enters after mascot."
+      },
+      {
+        "name": "delay-form",
+        "value": "350ms",
+        "purpose": "Stagger: form fades in last."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px", "note": "Email form switches from flex-col to flex-row at this breakpoint." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one interactive element that carries Sienna Ochre as a background. Used for the primary CTA (email sign-up).",
+      "html": "<button class=\"ds-btn-primary\">Get early access</button>",
+      "css": ".ds-btn-primary { background: oklch(72% 0.10 62); color: oklch(18% 0.008 75); padding: 12px 24px; border-radius: 8px; border: none; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1rem; font-weight: 400; cursor: pointer; white-space: nowrap; transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease; } .ds-btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 16px oklch(62% 0.14 58 / 0.35); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(52% 0.16 48); outline-offset: 2px; }"
+    },
+    {
+      "name": "Email Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "The email capture field. Uses tonal layering (slightly lighter than page bg) for depth without shadow.",
+      "html": "<input class=\"ds-input\" type=\"email\" placeholder=\"your@email.com\" />",
+      "css": ".ds-input { background: oklch(97% 0.012 66); color: oklch(18% 0.008 75); border: 1.5px solid oklch(72% 0.035 66); border-radius: 8px; padding: 12px 16px; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1rem; font-weight: 400; width: 100%; outline: none; transition: border-color 200ms ease, box-shadow 200ms ease; } .ds-input:focus { box-shadow: 0 0 0 2px oklch(52% 0.16 48), 0 0 0 4px oklch(93% 0.022 66); } .ds-input[aria-invalid='true'] { border-color: oklch(50% 0.15 25); }"
+    },
+    {
+      "name": "Email Capture Form",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The inline sign-up form. Switches from stacked (mobile) to row (sm+). Animates out on valid submit; success message animates in.",
+      "html": "<form class=\"ds-email-form\" novalidate><div class=\"ds-email-form__field\"><input class=\"ds-input\" type=\"email\" placeholder=\"your@email.com\" /></div><button class=\"ds-btn-primary\" type=\"submit\">Get early access</button></form>",
+      "css": ".ds-email-form { display: flex; gap: 12px; flex-wrap: wrap; max-width: 448px; margin: 0 auto; } .ds-email-form__field { flex: 1; min-width: 200px; } .ds-input { background: oklch(97% 0.012 66); color: oklch(18% 0.008 75); border: 1.5px solid oklch(72% 0.035 66); border-radius: 8px; padding: 12px 16px; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1rem; width: 100%; outline: none; transition: border-color 200ms ease; } .ds-input:focus { box-shadow: 0 0 0 2px oklch(52% 0.16 48), 0 0 0 4px oklch(93% 0.022 66); } .ds-btn-primary { background: oklch(72% 0.10 62); color: oklch(18% 0.008 75); padding: 12px 24px; border-radius: 8px; border: none; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease; } .ds-btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 16px oklch(62% 0.14 58 / 0.35); } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Sign-up Success State",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Replaces the form after valid submission. Rises in with fade-up animation. role=status for screen readers.",
+      "html": "<p class=\"ds-signup-success\" role=\"status\">You&#8217;re on the list. We&#8217;ll be in touch.</p>",
+      "css": "@keyframes ds-fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } } .ds-signup-success { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.1rem; color: oklch(35% 0.012 70); margin: 0; } @media (prefers-reduced-motion: no-preference) { .ds-signup-success { animation: ds-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; } }"
+    },
+    {
+      "name": "Error Message",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Inline validation error below the email input. Slides down on appearance. Cleared on any onChange event.",
+      "html": "<p class=\"ds-field-error\" id=\"email-error\" role=\"alert\">Enter a valid email address.</p>",
+      "css": "@keyframes ds-fade-down { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } } .ds-field-error { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.875rem; color: oklch(50% 0.15 25); margin-top: 6px; text-align: left; } @media (prefers-reduced-motion: no-preference) { .ds-field-error { animation: ds-fade-down 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Warm Workshop",
+    "overview": "This system is a place where real work gets done. The aesthetic reads like a well-lit studio: warm, amber-tinted surfaces, tools that feel honest in the hand, nothing decorative that doesn't earn its place. The mascot — a grinning chimp — is the heart of the brand. Every design decision either gives the mascot room to breathe or gets out of its way.\n\nTypography does one thing dramatically. The display title arrives at clamp(3.5rem, 11vw, 7.5rem) — massive, tight-tracked, commanding the viewport before anything else loads. Everything beneath it drops to body scale and disappears into support. This ratio is the system's primary hierarchy mechanism. When in doubt, make the important thing bigger and everything else smaller.\n\nColor is committed, not safe. Sienna Ochre — drawn directly from the mascot's fur — ties the illustration to the UI. It lives on the primary button, the focus ring, the scrollbar thumb, the animated hover shadow. It is the one accent voice.",
+    "keyCharacteristics": [
+      "Mascot-led: the chimp is the primary brand signal; UI elements support it",
+      "One accent voice: Sienna Ochre everywhere interactive, nowhere decorative",
+      "Dramatic type hierarchy: 4-6x scale ratio between display and body",
+      "Flat surfaces, state-based shadows: nothing elevates at rest",
+      "Motion is purposeful: entrances, feedback, and state transitions only"
+    ],
+    "rules": [
+      {
+        "name": "The One Ochre Rule",
+        "body": "Sienna Ochre and Burnt Ochre are the only saturated colors in the system. Use them only on interactive elements. Never on decorative elements, headings, or backgrounds.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Tint Rule",
+        "body": "Every neutral must have chroma between 0.004 and 0.022, tinted toward hue 66-75. Pure grays and #000/#fff are forbidden.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Space Grotesk is the only typeface. Hierarchy comes from weight and scale, not variety.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tracking Gate",
+        "body": "Display: -0.045em. Body: -0.01em. Label: 0em. Never positive letter-spacing on Space Grotesk.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "No element carries elevation at rest. Shadows are responses to user intent (hover, focus), not passive decoration.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Tonal Depth Rule",
+        "body": "Depth between surfaces uses tonal layering (lighter OKLCH lightness value), not shadows. Shadows are reserved for interactive state.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Sienna Ochre (oklch(72% 0.10 62)) and Burnt Ochre (oklch(52% 0.16 48)) for all interactive states.",
+      "Do use Space Grotesk Bold only for the display title.",
+      "Do create hierarchy through extreme scale contrast: 4-6x ratio between display and body.",
+      "Do wrap all CSS animations in @media (prefers-reduced-motion: no-preference).",
+      "Do use cubic-bezier(0.16, 1, 0.3, 1) for all UI transitions and entrances.",
+      "Do use OKLCH for all new colors, tinted toward hue 66-75.",
+      "Do give the mascot the dominant position on any screen it appears.",
+      "Do use tonal layering for depth. Shadows appear only on hover/focus state.",
+      "Do use role=alert for error messages and role=status for success states."
+    ],
+    "donts": [
+      "Don't use gradient text (background-clip: text). Absolute ban.",
+      "Don't use the purple primary color scale in tailwind.config.ts — it is vestigial from a previous design direction.",
+      "Don't use glassmorphism: blurred backdrop-filter cards or frosted surfaces.",
+      "Don't use generic SaaS patterns: floating feature grids, identical card grids, hero metric templates.",
+      "Don't use cluttered agency site patterns: competing scroll animations, multiple CTA buttons.",
+      "Don't apply border-left or border-right greater than 1px as a colored stripe accent.",
+      "Don't animate layout properties (width, height, top, left, margin). Transform and opacity only.",
+      "Don't use bounce or elastic easing curves.",
+      "Don't add a shadow to a surface at rest.",
+      "Don't introduce a second typeface. Add scale contrast instead.",
+      "Don't use #000 or #fff directly. The period in nomonkey.work is the sole exception."
+    ]
+  }
+}

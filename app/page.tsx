@@ -1,39 +1,50 @@
 import MonkeyEyesClient from '@/app/components/MonkeyEyesClient';
+import EmailCapture from '@/app/components/EmailCapture';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex flex-col items-center justify-center p-8">
-      <div className="max-w-4xl mx-auto text-center">
+    <main
+      className="min-h-screen flex flex-col items-center justify-center px-6 py-16"
+      style={{ backgroundColor: 'oklch(93% 0.022 66)' }}
+    >
+      <div className="w-full mx-auto text-center" style={{ maxWidth: '780px' }}>
         <h1
-          className="text-5xl md:text-7xl mb-12 bg-clip-text text-transparent"
+          className="animate-fade-up"
           style={{
             fontFamily: 'var(--font-sg-bold)',
-            backgroundImage: 'linear-gradient(to right, #3c3c3c, #0f0f0f)',
+            color: 'oklch(18% 0.008 75)',
+            fontSize: 'clamp(3.5rem, 11vw, 7.5rem)',
+            letterSpacing: '-0.045em',
+            lineHeight: '1',
+            marginBottom: '2rem',
           }}
         >
-          nomonkey.work
+          nomonkey<span style={{ color: '#ffffff' }}>.</span>work
         </h1>
 
-        <MonkeyEyesClient />
+        <div className="animate-fade-up delay-100">
+          <MonkeyEyesClient />
+        </div>
 
-        <div className="mt-12 space-y-4">
-          <div className="flex justify-center gap-4">
-            <button
-              className="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
-              style={{ fontFamily: 'var(--font-sg-regular)' }}
-            >
-              Coming soon
-            </button>
+        <p
+          className="animate-fade-up delay-200 text-balance"
+          style={{
+            fontFamily: 'var(--font-sg-regular)',
+            color: 'oklch(32% 0.012 70)',
+            fontSize: 'clamp(1rem, 1.8vw, 1.25rem)',
+            marginTop: '2rem',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          We do the monkey work. You do the real work.
+          {/* We do the monkey moves. You make the money moves. */}
+          {/* We deal with the monkey business. You deal with the money business. */}
+        </p>
 
-            {/* <button
-              className="px-6 py-3 bg-white text-purple-600 rounded-full hover:bg-gray-50 transition-colors shadow-lg hover:shadow-xl"
-              style={{ fontFamily: 'var(--font-sg-regular)' }}
-            >
-              Learn More
-            </button> */}
-          </div>
+        <div className="animate-fade-in delay-350" style={{ marginTop: '2.5rem' }}>
+          <EmailCapture />
         </div>
       </div>
 
