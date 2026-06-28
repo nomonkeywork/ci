@@ -2,6 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme tokens ────────────────────────────────────────────────── */
+:root {
+  --c-canvas: linear-gradient(160deg, #fff2d9, #fffbf2);
+  --c-canvas-high: #fffbf2;
+  --c-text: oklch(18% 0.008 75);
+  --c-text-muted: oklch(32% 0.012 70);
+  --c-text-faint: oklch(55% 0.018 70);
+  --c-btn-bg: linear-gradient(135deg, #3c3c3c, #0f0f0f);
+  --c-btn-text: #ffffff;
+  --c-btn-shadow: rgb(253 171 0 / 0.5);
+  --c-field-bg: oklch(97% 0.012 66);
+  --c-field-border: oklch(72% 0.035 66);
+  --c-error: oklch(50% 0.15 25);
+  --c-switch-track: oklch(87% 0.028 66);
+  --c-switch-thumb: oklch(97% 0.012 66);
+  --c-toggle-ring: oklch(80% 0.03 66);
+}
+
+html.dark {
+  --c-canvas: oklch(11% 0.01 72);
+  --c-canvas-high: oklch(16% 0.012 70);
+  --c-text: oklch(93% 0.01 72);
+  --c-text-muted: oklch(68% 0.014 70);
+  --c-text-faint: oklch(50% 0.014 70);
+  --c-btn-bg: oklch(80% 0.175 76);
+  --c-btn-text: oklch(12% 0.008 75);
+  --c-btn-shadow: oklch(78% 0.155 76 / 0.4);
+  --c-field-bg: oklch(16% 0.012 70);
+  --c-field-border: oklch(26% 0.012 70);
+  --c-error: oklch(62% 0.15 25);
+  --c-switch-track: oklch(18% 0.015 70);
+  --c-switch-thumb: oklch(26% 0.015 70);
+  --c-toggle-ring: oklch(30% 0.016 68);
+}
+
+html.dark .typewriter-cursor {
+  background-color: #fdab00;
+}
+
+.logo-dot {
+  color: #fdab00;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: oklch(9% 0.008 72);
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: oklch(30% 0.015 70);
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: oklch(38% 0.018 70);
+}
+
 @layer base {
   body {
     @apply antialiased;
@@ -23,7 +76,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(72% 0.10 62);
+    background: oklch(72% 0.1 62);
     border-radius: 999px;
   }
 
@@ -44,8 +97,12 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-down {
@@ -60,12 +117,25 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  15%       { transform: translateX(-5px); }
-  35%       { transform: translateX(5px); }
-  55%       { transform: translateX(-4px); }
-  75%       { transform: translateX(3px); }
-  90%       { transform: translateX(-2px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-5px);
+  }
+  35% {
+    transform: translateX(5px);
+  }
+  55% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+  90% {
+    transform: translateX(-2px);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -85,10 +155,41 @@
     animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
 
-  .delay-100 { animation-delay: 100ms; }
-  .delay-200 { animation-delay: 200ms; }
-  .delay-350 { animation-delay: 350ms; }
-  .delay-500 { animation-delay: 500ms; }
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-350 {
+    animation-delay: 350ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+@keyframes typewriter-cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background-color: oklch(52% 0.16 48);
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.typewriter-cursor--blink {
+  animation: typewriter-cursor-blink 530ms ease infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
